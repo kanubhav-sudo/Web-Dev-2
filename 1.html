@@ -1,48 +1,42 @@
-<!-- https://home.openweathermap.org/api_keys -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Lab 2 - Async Weather Tracker</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather App</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="container">
-        <!-- Added <u> tag for underline -->
-        <h1 style="text-align: center;">☀️ <u>Async Weather Tracker</u></h1>
+<div class="container">
 
-        <div class="grid">
-            <!-- LEFT COLUMN -->
-            <div class="card">
-                <h3>Search City</h3>
-                <input type="text" id="cityInput" placeholder="Enter city name...">
-                <button id="searchBtn">Search</button>
-                
-                <hr> <!-- Added horizontal line -->
-                <h4>Search History</h4>
-                <div id="historyList"></div>
-            </div>
+<h1>Weather Tracker</h1>
 
-            <!-- RIGHT COLUMN -->
-            <div class="card">
-                <h3>Weather Info</h3>
-                <div id="weatherInfo">
-                    <!-- Added <i> for italics -->
-                    <p style="text-align: center; color: #999;"><i>Search a city to see details</i></p>
-                </div>
-            </div>
-        </div>
+<div class="searchBox">
+<input type="text" id="cityInput" placeholder="Enter city name">
+<button id="searchBtn">Search</button>
+</div>
 
-        <!-- BOTTOM CONSOLE -->
-        <div class="card">
-            <h3>Console - Event Loop Analysis</h3>
-            <hr>
-            <div id="logBox" class="console"></div>
-        </div>
-    </div>
+<div class="card">
+<h2>Weather Info</h2>
+<div id="weatherInfo">
+<p class="placeholder">Search a city to see weather</p>
+</div>
+</div>
 
-   
+<div class="card">
+<h2>Recent Cities</h2>
+<div id="historyList"></div>
+</div>
+
+<div class="card">
+<h2>Console Log</h2>
+<div id="logBox" class="console"></div>
+</div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
-<script src="script.js"></script>

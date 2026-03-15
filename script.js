@@ -1,106 +1,116 @@
+const apiKey = "919d271dac1bb5318b47f53499249864"
 
-        // Simple function to display logs in our black box
-        function addLog(text) {
-            var logBox = document.getElementById('logBox');
-            logBox.innerHTML = logBox.innerHTML + "<div> > " + text + "</div>";
-        }
+function addLog(text){
+const logBox = document.getElementById("logBox")
+const line = document.createElement("div")
+line.innerText = "> " + text
+logBox.appendChild(line)
+}
 
-        // The Main Async function for fetching weather
-        async function getWeatherData(city) {
-            var infoDiv = document.getElementById('weatherInfo');
-            var logBox = document.getElementById('logBox');
-            
-            
-            if (city == "") {
-                alert("Please enter a city!");
-                return;
-            }
+async function getWeather(city){
 
-            logBox.innerHTML = ""; // Clear console for new search
+const info = document.getElementById("weatherInfo")
+const logBox = document.getElementById("logBox")
 
-            // --- DEMONSTRATING EVENT LOOP ---
-            addLog("1. Sync: Code Started");
+if(city === ""){
+alert("Enter a city")
+return
+}
 
-            // Macrotask (runs last)
-            setTimeout(function() {
-                addLog("4. Macrotask: setTimeout finished");
-            }, 0);
+logBox.innerHTML=""
 
-            // Microtask (runs after sync code)
-            Promise.resolve().then(function() {
-                addLog("3. Microtask: Promise finished");
-            });
+addLog("1 Sync start")
 
-            addLog("2. Sync: Fetching from API...");
+setTimeout(()=>{
+addLog("4 Macrotask finished")
+},0)
 
-            try {
-                var apiKey = "919d271dac1bb5318b47f53499249864";
-                var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + apiKey;
-                
-                // Using await for fetch
-                var response = await fetch(url);
-                
-                if (!response.ok) {
-                    throw new Error("City not found");
-                }
+Promise.resolve().then(()=>{
+addLog("3 Microtask finished")
+})
 
-                var data = await response.json();
+addLog("2 Fetching weather")
 
-                // Updating UI with results
-                infoDiv.innerHTML = `
-                    <div class="row"><b>City</b> <span>${data.name}</span></div>
-                    <div class="row"><b>Temp</b> <span>${data.main.temp}°C</span></div>
-                    <div class="row"><b>Humidity</b> <span>${data.main.humidity}%</span></div>
-                    <div class="row"><b>Wind Speed</b> <span>${data.wind.speed} m/s</span></div>
-                `;
+try{
 
-                saveHistory(data.name);
-                addLog("5. Async: Weather data loaded");
+const url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
 
-            } catch (err) {
-                infoDiv.innerHTML = "<p style='color:red; text-align:center;'>Error: " + err.message + "</p>";
-                addLog("Error occurred: " + err.message);
-            }
-        }
+const res = await fetch(url)
 
-        // Function to save cities to Local Storage
-        function saveHistory(cityName) {
-            var history = JSON.parse(localStorage.getItem('myHistory')) || [];
-            
-            // If city is not in list, add it
-            if (history.indexOf(cityName) === -1) {
-                history.push(cityName);
-                localStorage.setItem('myHistory', JSON.stringify(history));
-                showHistory();
-            }
-        }
+if(!res.ok){
+throw new Error("City not found")
+}
 
-        // Function to show history buttons
-        function showHistory() {
-            var history = JSON.parse(localStorage.getItem('myHistory')) || ["Delhi", "Mumbai", "London"];
-            var historyList = document.getElementById('historyList');
-            historyList.innerHTML = "";
+const data = await res.json()
 
-            // Standard for loop to create buttons
-            for (var i = 0; i < history.length; i++) {
-                var btn = document.createElement('button');
-                btn.className = "hist-btn";
-                btn.innerText = history[i];
-                
-                // Set click for each button
-                let currentCity = history[i];
-                btn.onclick = function() {
-                    getWeatherData(currentCity);
-                };
-                historyList.appendChild(btn);
-            }
-        }
+info.innerHTML = `
+<div class="row"><b>City</b><span>${data.name}</span></div>
+<div class="row"><b>Temp</b><span>${data.main.temp}°C</span></div>
+<div class="row"><b>Humidity</b><span>${data.main.humidity}%</span></div>
+<div class="row"><b>Wind</b><span>${data.wind.speed} m/s</span></div>
+`
 
-        // Event listener for the Search button
-        document.getElementById('searchBtn').onclick = function() {
-            var inputVal = document.getElementById('cityInput').value;
-            getWeatherData(inputVal);
-        };
+saveHistory(data.name)
 
-        // Load history when page opens
-        window.onload = showHistory;
+addLog("5 Weather loaded")
+
+}
+catch(err){
+info.innerHTML=`<p style="color:red;text-align:center">${err.message}</p>`
+addLog("Error: "+err.message)
+}
+
+}
+
+function saveHistory(city){
+
+let history = JSON.parse(localStorage.getItem("cities")) || []
+
+if(!history.includes(city)){
+history.push(city)
+
+if(history.length>5){
+history.shift()
+}
+
+localStorage.setItem("cities",JSON.stringify(history))
+}
+
+showHistory()
+}
+
+function showHistory(){
+
+let history = JSON.parse(localStorage.getItem("cities")) || ["Delhi","London","Tokyo"]
+
+const list = document.getElementById("historyList")
+list.innerHTML=""
+
+history.forEach(city=>{
+
+const btn=document.createElement("button")
+btn.className="hist-btn"
+btn.innerText=city
+
+btn.onclick=()=>{
+getWeather(city)
+}
+
+list.appendChild(btn)
+
+})
+}
+
+document.getElementById("searchBtn").addEventListener("click",()=>{
+const city=document.getElementById("cityInput").value.trim()
+getWeather(city)
+})
+
+document.getElementById("cityInput").addEventListener("keypress",(e)=>{
+if(e.key==="Enter"){
+const city=document.getElementById("cityInput").value.trim()
+getWeather(city)
+}
+})
+
+window.onload=showHistory

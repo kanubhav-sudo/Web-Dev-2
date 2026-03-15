@@ -1,0 +1,48 @@
+<!-- https://home.openweathermap.org/api_keys -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 2 - Async Weather Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Added <u> tag for underline -->
+        <h1 style="text-align: center;">☀️ <u>Async Weather Tracker</u></h1>
+
+        <div class="grid">
+            <!-- LEFT COLUMN -->
+            <div class="card">
+                <h3>Search City</h3>
+                <input type="text" id="cityInput" placeholder="Enter city name...">
+                <button id="searchBtn">Search</button>
+                
+                <hr> <!-- Added horizontal line -->
+                <h4>Search History</h4>
+                <div id="historyList"></div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="card">
+                <h3>Weather Info</h3>
+                <div id="weatherInfo">
+                    <!-- Added <i> for italics -->
+                    <p style="text-align: center; color: #999;"><i>Search a city to see details</i></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM CONSOLE -->
+        <div class="card">
+            <h3>Console - Event Loop Analysis</h3>
+            <hr>
+            <div id="logBox" class="console"></div>
+        </div>
+    </div>
+
+   
+</body>
+</html>
+<script src="script.js"></script>

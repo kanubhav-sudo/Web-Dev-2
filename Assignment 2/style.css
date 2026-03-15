@@ -1,1 +1,57 @@
+ 
+        /* KEEPING YOUR EXACT UI STYLE */
+        body {
+            background: linear-gradient(#1e3a8a, #0f172a); 
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { width: 100%; max-width: 800px; }
+        
+        .card {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
 
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        input { padding: 10px; width: 70%; border-radius: 5px; border: 1px solid #ccc; }
+        button { 
+            padding: 10px; 
+            background: #e67e22; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+
+        .hist-btn {
+            background: #e67e22;
+            color: white;
+            border: none;
+            margin: 5px 5px 0 0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .row b { color: #555; }
+
+        .console {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 120px;
+            overflow-y: auto;
+        }
